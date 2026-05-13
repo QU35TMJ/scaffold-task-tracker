@@ -25,7 +25,21 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Lint (basic check)
+      - name: Build Docker containers
+        run: docker compose build
+
+      - name: Start containers
+        run: docker compose up -d
+
+      - name: Wait for app to be ready
         run: |
-          python -m py_compile main.py 
+          sleep 10
+
+      - name: Test API endepoint
+        run: |
+          curl -f http://localhost:8000/docs
+
+      - name: Stop containers
+        run: docker compose down 
+             
   
