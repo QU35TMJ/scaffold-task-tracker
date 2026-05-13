@@ -55,7 +55,12 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}             
   
       - name: Build Docker Image
-        run: docker build -t qu35t16/scaffold-task-tracker:latest .
+        run: |
+          docker build \ 
+            -t qu35t16/scaffold-task-tracker:${{ github.sha }} \
+            -t qu35t16/scaffold-task-tracker:latest .
 
       - name: Push Docker image
-        run: docker push qu35t16/scaffold-task-tracker:latest
+        run: |
+          docker push qu35t16/scaffold-task-tracker:${{ github.sha }}
+          docker push qu35t16/scaffold-task-tracker:latest
