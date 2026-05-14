@@ -64,3 +64,16 @@ jobs:
         run: |
           docker push qu35t16/scaffold-task-tracker:${{ github.sha }}
           docker push qu35t16/scaffold-task-tracker:latest
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-actions@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd scaffold-task-tracker
+            git pull
+            docker compose down
+            docker compose up -d --build
+       
