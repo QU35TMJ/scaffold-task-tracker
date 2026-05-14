@@ -23,7 +23,7 @@ services:
 
 
   web:
-    build: .
+    image: qu35t16/scaffold-task-tracker:latest
     container_name: fastapi_app
     depends_on:
       - db
